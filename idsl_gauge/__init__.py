@@ -5,7 +5,7 @@ import datetime
 
 BASE_URL = 'https://webcritech.jrc.ec.europa.eu/TAD_server/'
 GROUPS_API = 'api/Groups/GetGEOJSON?group={}&maxLatency={}'
-DATA_API = 'api/Data/Get/{}?tMin={}%20{}&tMax={}%20{}&mode=json'
+DATA_API = 'api/Data/Get/{}?tMin={}%20{}&tMax={}%20{}&nRec={}&mode=json'
 
 class IDSLGauge:
     """
@@ -70,7 +70,7 @@ class IDSLGauge:
             latency], axis = 1)
         self.stations = self.metadata.index.to_list()
 
-    def get_gauges_data(self, station_id, start, end):
+    def get_gauges_data(self, station_id, start, end, max_records = 5000):
         """
         Get data from station_id from start to end
 
@@ -82,6 +82,8 @@ class IDSLGauge:
             start datetime
         end: datetime.datetime
             end datetime
+        max_records: int
+            maximum number of records
         Returns
         -------
         data: pandas.DataFrame
@@ -90,7 +92,8 @@ class IDSLGauge:
         # Get data from JSON data API
         url = BASE_URL + DATA_API.format(station_id, \
             start.date().isoformat(), start.time().isoformat()[:8], \
-            end.date().isoformat(), end.time().isoformat()[:8])
+            end.date().isoformat(), end.time().isoformat()[:8], \
+            max_records)
         req = requests.get(url)
         assert(req.status_code == 200)
 
