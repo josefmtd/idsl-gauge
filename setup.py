@@ -3,7 +3,7 @@ from setuptools import setup
 setup(name = 'idsl_gauge',
     author = 'Josef Matondang',
     author_email = 'admin@josefmtd.com',
-    version = '1.0.0',
+    version = '1.0.1',
     description = 'Unofficial Python Wrapper for IDSL Tide Gauge API',
     classifiers = [
         'Development Status :: 4 - Beta',
